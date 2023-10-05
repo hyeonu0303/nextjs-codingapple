@@ -1,8 +1,10 @@
 ## Getting Started
 
-pnpm install
+
 
 ```bash
+pnpm install
+
 pnpm run dev
 # or
 pyarn dev
