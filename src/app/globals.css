@@ -21,3 +21,21 @@ body {
   color: grey;
   margin : 5px 0px;
 } 
+
+.navbar {
+  background: white;
+  padding: 20px;
+}
+.navbar a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+}
+.logo {
+  font-weight: bold;
+} 
+
+a {
+  text-decoration: none;
+  color : black;
+} 

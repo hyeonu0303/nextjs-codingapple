@@ -1,19 +1,15 @@
-import { connectDB } from "../../../../util/database";
+import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
 
-type detailProps = {
-  params: {
-    id:number | string
-  }
-}
-
-const Detail = async ({params}:detailProps)=>{
+const Detail = async ({params}:{params:{id:string}})=>{
   const client = await connectDB;
   const db = client.db('board')
   let result = await db.collection('post').findOne(
     {_id:new ObjectId(params.id)}
   )
-  console.log(result);
+  if(result != null){
+    console.log(result);
+  }
   return(
     <div>
       <h4>상세페이지</h4>
