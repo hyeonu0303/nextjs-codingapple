@@ -3,12 +3,11 @@ import { connectDB } from "@/util/database";
 import { Db, DeleteResult, ObjectId } from 'mongodb';
 
 
-
 export async function POST(request:Request){
-  const res = await request.json()
-  const {_id} = res;
-  console.log('res',res)
+  const body = await request.json()
+  const id = body.id
+  console.log('body:',body)
   const db:Db = (await connectDB).db('board');
-  let deleteContent:DeleteResult = await db.collection('post').deleteOne({_id:new ObjectId(_id)})
-  return NextResponse.json(deleteContent,{status:200})
+  await db.collection('post').deleteOne({_id:new ObjectId(id)})
+  return NextResponse.json({message:"삭제성공"},{status:200})
 }

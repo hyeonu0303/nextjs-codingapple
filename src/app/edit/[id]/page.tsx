@@ -1,4 +1,4 @@
-'use client'
+/* 'use client'
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -64,4 +64,29 @@ const EditContent = ({params}:{params:{id:string}}) => {
     )
 }
 
+export default EditContent; */
+
+import { connectDB } from "@/util/database";
+import { ObjectId } from "mongodb";
+const EditContent = async({params}:{params:{id:string}}) => {
+  const db = (await connectDB).db('board');
+  let result = (await db.collection('post').findOne({_id:new ObjectId(params.id)})); 
+  return(
+    <>
+    {
+      result && (
+        <div className="write">
+          <form action="/api/edit" method="POST">
+            <input type="hidden" name="id" defaultValue={params.id}/>
+            <input name="title" defaultValue={result.title}/>
+            <input name="content" defaultValue={result.content}/>
+            <button type="submit">전송</button>
+          </form>
+        </div> 
+      )
+    }
+    </>
+  )
+}
 export default EditContent;
+
