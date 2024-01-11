@@ -7,25 +7,31 @@ import Link from "next/link";
 const ListItem = ({result}:{result:PostType[]}) => {
   const router = useRouter();
 
-  const handleDelete = async(id:string,e:React.MouseEvent) => {
+  const handleDelete = async(id:string,email:string,e:React.MouseEvent) => {
     try{
+      const target = e.currentTarget;
       let response = await fetch('/api/delete',{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
         },
         body:JSON.stringify({
-          id      
+          id,
+          email      
         })
       })
       let responseJson = await response.json()
-      if(response.ok){
+      if(responseJson.message=="success" && target.parentElement){
         console.log(responseJson.message);
-        if(e.currentTarget.parentElement)
-        e.currentTarget.parentElement.style.opacity = '0';
+        target.parentElement.style.opacity = '0';
+        setTimeout(()=>{
+          if(target.parentElement)
+          target.parentElement.style.display = 'none';
+        },1000)
       }
-      
-
+      else{
+        alert('해당 게시글은 삭제할 수 없습니다')
+      }
     }catch(error){
       console.log("삭제에러",error)
     }
@@ -41,7 +47,7 @@ const ListItem = ({result}:{result:PostType[]}) => {
           <Link href={`edit/${item._id.toString()}`}>
             <span style={{cursor:"pointer"}}>✏️</span>
           </Link>
-          <span style={{cursor:"pointer"}} onClick={(e)=>{handleDelete(item._id,e)}}>
+          <span style={{cursor:"pointer"}} onClick={(e)=>{handleDelete(item._id,item.userEmail,e)}}>
             🗑️
           </span>
           <p>{item.content}</p>

@@ -2,4 +2,5 @@ export interface PostType{
   _id:string,
   title:string,
   content:string
+  userEmail:string
 }
