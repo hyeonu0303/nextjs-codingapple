@@ -10,8 +10,9 @@ export async function POST(request:Request){
   const body = await request.json()
   const {id,email} = body
 
+  console.log(email)
 
-  if(session && session.user?.email != email){
+  if(session && session.user?.email == email){
     let userEmail = session.user?.email
     const db:Db = (await connectDB).db('board');
     await db.collection('post').deleteOne({_id:new ObjectId(id),userEmail})

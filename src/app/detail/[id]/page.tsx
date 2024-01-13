@@ -1,6 +1,6 @@
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
-
+import Comment from "./Comment";
 const Detail = async ({params}:{params:{id:string}})=>{
   const client = await connectDB;
   const db = client.db('board')
@@ -15,6 +15,7 @@ const Detail = async ({params}:{params:{id:string}})=>{
       <h4>상세페이지</h4>
       <h4>글제목</h4>
       <p>글내용</p>
+      <Comment params={params}/>
     </div>
   )
 }
